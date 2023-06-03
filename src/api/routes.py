@@ -29,6 +29,10 @@ def singupinator():
 
     if not email or not password:
         return jsonify({"message": "no email o contraseña"})
+    exists = User.query.filter_by(email=email).first()
+
+    if exists:
+        return jsonify({"message": "mail is already registered"})
 
     to_add = User(password=password, email=email, is_active=True)
     db.session.add(to_add)
@@ -55,12 +59,10 @@ def loginator():
     return jsonify({"access token": token, "Message": "exito"})
 
 
-@api.route("/private", methods = ["GET"])
+@api.route("/private", methods=["GET"])
 @jwt_required()
 def privatinator():
     user_id = get_jwt_identity()
     current_user = User.query.get(user_id)
 
-
-    return jsonify({"private message" : "this is very private"})
-
+    return jsonify({"private message": "this is very private"})

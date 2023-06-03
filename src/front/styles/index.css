@@ -1,3 +1,14 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+.cont { /*  resulta que no tenia que cambiar el body si no el div que esta en layout*/
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+#footer_container {
+    margin-top: auto;
+    padding-top: 3rem;
+    width: 100%;
+}
