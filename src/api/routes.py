@@ -56,7 +56,7 @@ def loginator():
         return jsonify({"message": "error, datos incorrectos"})
 
     token = create_access_token(identity=user.id)
-    return jsonify({"access token": token, "message": "exito"})
+    return jsonify({"access_token": token, "message": "exito"})
 
 
 @api.route("/private", methods=["GET"])

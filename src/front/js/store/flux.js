@@ -30,7 +30,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.catch(error => console.log('error', error));
 			},
 			login_handlinator(user){
-				console.log(user)
+				
 				fetch("https://diuca-x-shiny-broccoli-444x6wg79w6f7wr6-3001.preview.app.github.dev/api/login", {
 					method : "POST",
 					body: JSON.stringify(user),
@@ -39,9 +39,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				})
 				.then(response => response.json())
-				.then(result => alert(result.message))
+				.then(result => {
+					localStorage.setItem("jwt-token", result.access_token);
+					alert(result.message)
+				})
 				.catch(error => console.log('error', error));
-			}
+			},
+			logoutinator(){
+				localStorage.clear();
+			},
+			
 
 
 		}

@@ -18,7 +18,7 @@ const Login = () =>{
         ////agregar aca el post a /signup. hace un alert si devuelve que no esta en la base de datos 
         console.log(user)
         actions.login_handlinator(user)
-        
+        navigate('/', { replace: true });
     }
 
     return(
