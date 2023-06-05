@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 const Login = () =>{
+    const { store, actions } = useContext(Context);
     const navigate = useNavigate()
     const [user,setUser] = useState({})
 
     const user_setinator = (event) => {
         setUser({ ...user, [event.target.id]: event.target.value });
-        console.log(user)
+        
       };
 
     const submit_handlinator = (event) =>{
@@ -15,6 +17,8 @@ const Login = () =>{
 
         ////agregar aca el post a /signup. hace un alert si devuelve que no esta en la base de datos 
         console.log(user)
+        actions.login_handlinator(user)
+        
     }
 
     return(

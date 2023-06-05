@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 const Signup = () =>{
     const navigate = useNavigate()
+    const { store, actions } = useContext(Context);
     const [user,setUser] = useState({})
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -10,11 +12,17 @@ const Signup = () =>{
     const submit_handlinator = (event) =>{
         event.preventDefault()
         if (password != confirmPassword){
-            alert('Passwords dont match');
+             return alert('Passwords dont match');
         } else{
             setUser({...user, "password": password})
-
+            let us = {
+                email: user.email,
+                password: password
+            }
+           
             //agregar aca el post a /signup. hace un alert si devuelve que ya esta en la base de datos 
+            
+            actions.signup_handlinator(us)
             navigate('/', { replace: true });
         }
     }
