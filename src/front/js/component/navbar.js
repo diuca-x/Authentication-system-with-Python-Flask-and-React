@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { isLogged } from "../isloged";
+
 import { Context } from "../store/appContext";
 
 
@@ -8,12 +8,12 @@ import { Context } from "../store/appContext";
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 
-	if(isLogged()){
+	if(store.isloged){
 		return (
 			<nav className="navbar navbar-light bg-light">
 				<div className="container">
 					<Link to="/">
-						<span className="navbar-brand mb-0 h1">My page</span>
+						<span className="navbar-brand mb-0 h1" onClick={() => {actions.isloged()}}>My page</span>
 					</Link>
 					<div className="ms-auto">
 						<Link to="/">

@@ -65,4 +65,4 @@ def privatinator():
     user_id = get_jwt_identity()
     current_user = User.query.get(user_id)
 
-    return jsonify({"private message": "this is very private"})
+    return jsonify({"private message": "this is very private"}),200

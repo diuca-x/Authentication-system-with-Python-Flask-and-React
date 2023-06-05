@@ -12,13 +12,16 @@ const Login = () =>{
         
       };
 
-    const submit_handlinator = (event) =>{
+    const submit_handlinator = async (event) =>{
         event.preventDefault()
 
-        ////agregar aca el post a /signup. hace un alert si devuelve que no esta en la base de datos 
-        console.log(user)
-        actions.login_handlinator(user)
-        navigate('/', { replace: true });
+       
+        const login = await actions.login_handlinator(user)
+        // if lo de arriba es OK lo de abajo pasa
+        
+        if(login ){
+            navigate('/', { replace: true });
+        }
     }
 
     return(
