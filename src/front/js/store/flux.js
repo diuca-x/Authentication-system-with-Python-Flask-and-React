@@ -63,6 +63,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			isloged: () => {
+
 				const token = localStorage.getItem('jwt-token');
   
 				// Check if the token exists and is not expired
