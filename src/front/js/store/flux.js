@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -17,7 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							}
 						})
 					const result = await response.json()
-					alert(result.message)
+					Swal.fire(result.message)
 
 					if(response.status  < 400 ){
 						return true
@@ -39,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						}
 					})
 					const result = await response.json()
-					alert(result.message)
+					Swal.fire(result.message)
 					if (result.message == "exito"){
 						localStorage.setItem("jwt-token", result.access_token);
 						setStore({isloged:true})
@@ -73,7 +75,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const currentTime = Date.now();
 
 					if( currentTime >= expirationTime){
-						alert("session timed out")
+						Swal.fire("session timed out")
 						setStore({isloged:false})
 						localStorage.clear();
 						return false;
