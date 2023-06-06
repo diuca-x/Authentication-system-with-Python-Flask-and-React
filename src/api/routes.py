@@ -32,13 +32,13 @@ def singupinator():
     exists = User.query.filter_by(email=email).first()
 
     if exists:
-        return jsonify({"message": "mail is already registered"})
+        return jsonify({"message": "mail is already registered"}), 400
 
     to_add = User(password=password, email=email, is_active=True)
     db.session.add(to_add)
     db.session.commit()
 
-    return jsonify({"message": "exito", "userpass": password, "usermail": email})
+    return jsonify({"message": "exito"}), 200
 
 
 @api.route("/login", methods=["POST"])
@@ -65,4 +65,4 @@ def privatinator():
     user_id = get_jwt_identity()
     current_user = User.query.get(user_id)
 
-    return jsonify({"private message": "this is very private"}),200
+    return jsonify({"private message": "this is very private"}), 200

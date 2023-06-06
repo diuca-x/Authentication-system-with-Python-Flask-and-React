@@ -9,7 +9,7 @@ const Signup = () =>{
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const submit_handlinator = (event) =>{
+    const submit_handlinator = async (event) =>{
         event.preventDefault()
         if (password != confirmPassword){
              return alert('Passwords dont match');
@@ -22,8 +22,11 @@ const Signup = () =>{
            
             //agregar aca el post a /signup. hace un alert si devuelve que ya esta en la base de datos 
             
-            actions.signup_handlinator(us)
-            navigate('/', { replace: true });
+            const ok = await actions.signup_handlinator(us)
+            if( ok) {
+                navigate('/', { replace: true });
+            }
+           
         }
     }
 

@@ -13,23 +13,18 @@ export const Home = () => {
 	
 	const show = async () =>{
 		let go_to = await actions.private_showinator()
-		console.log(go_to)
-		return go_to
+		
+		if(go_to){
+			navigate('/private/yes', { replace: true });
+		} else {
+			navigate('/private/no', { replace: true });
+		}
 	}
 
 	if(store.isloged){
 		return (
 			<div className="text-center container mt-5">
-				<button type="button" className="btn btn-primary my-auto mx-auto" onClick={ () =>{					
-					let go_to = show()
-					
-					if(go_to){
-						console.log("AAAAAno pasas1")
-						navigate('/private', { replace: true });
-					} else {
-						console.log("AAAAAno pasas2")
-					}
-					}}> See private info</button>
+				<button type="button" className="btn btn-primary my-auto mx-auto" onClick={ () =>{show()}}> See private info</button>
 			</div>
 		);
 	} else {
@@ -37,7 +32,7 @@ export const Home = () => {
 			<div className="text-center container mt-5">
 				<div className="row justify-content-center">
 					<div className=" col-8">
-					<img src={mypageUrl} className="img-fluid" alt="Responsive image"/>
+						<img src={mypageUrl} className="img-fluid" alt="Responsive image"/>
 					</div>
 				</div>
 			</div>

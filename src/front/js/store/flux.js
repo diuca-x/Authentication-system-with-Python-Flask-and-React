@@ -6,17 +6,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			signup_handlinator : (user) => {				
-				fetch(process.env.BACKEND_URL + "/api/signup", {
-					method : "POST",
-					body: JSON.stringify(user),
-					headers: {
-						'Content-Type': 'application/json'
+			
+			signup_handlinator : async (user) => {	
+				try {			
+					const response = await fetch(process.env.BACKEND_URL + "/api/signup", {
+							method : "POST",
+							body: JSON.stringify(user),
+							headers: {
+								'Content-Type': 'application/json'
+							}
+						})
+					const result = await response.json()
+					alert(result.message)
+
+					if(response.status  < 400 ){
+						return true
+					} else {
+						return false
 					}
-				})
-				.then(response => response.json())
-				.then(result => alert(result.message))
-				.catch(error => console.log('error', error));
+
+				} catch(error){
+					console.log("Error loading message from backend")
+				}		
 			},
 			login_handlinator : async (user) => {
 				try {
@@ -31,7 +42,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					alert(result.message)
 					if (result.message == "exito"){
 						localStorage.setItem("jwt-token", result.access_token);
-						console.log(result.access_token)
 						setStore({isloged:true})
 						return true
 					} else {
@@ -39,7 +49,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 				}catch(error){
-					console.log("Error loading message from backend", error)
+					console.log("Error loading message from backend")
 				}		
 				
 			},
@@ -57,8 +67,19 @@ const getState = ({ getStore, getActions, setStore }) => {
   
 				// Check if the token exists and is not expired
 				if (token) {
+					const decodedToken = JSON.parse(atob(token.split('.')[1]));
+					const expirationTime = decodedToken.exp * 1000; // Convert expiration time to milliseconds
+					const currentTime = Date.now();
+
+					if( currentTime >= expirationTime){
+						alert("session timed out")
+						setStore({isloged:false})
+						localStorage.clear();
+						return false;
+					}
+
+
 				
-				// Token is valid
 				setStore({isloged:true})
 				return true;
 				}
@@ -85,12 +106,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 							return true
 						} 
 						if(response.status >= 400) {						
-							throw Error('Uknon error');
+							return false
 							
 						}
-					} catch(error){
-						console.log("not loged")						
-						return false
+					} catch(error){					
+						console.log("Error")
 					}					
 
 				} else {
